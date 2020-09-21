@@ -25,12 +25,16 @@ tenets:
           annotations such as _this_ will reproduce verbatim and should not be used. One adjustment godoc
           does do is to display indented text in a fixed-width font, suitable for program snippets.
           The package comment for the fmt package uses this to good effect.
-          Good code:
-            //This is a good comment example
-          Bad code:
-            /*
-            *This comment uses unnecessary_banners_of_stars and <annotations> 
-            */
+          
+          ## Bad code
+          ```
+          // This is a *bad* comment example
+          ```
+          
+          ## Good code
+          ```
+          // This is a good comment example
+          ```
       codelingo/review:
         comment: |
           The comments are uninterpreted plain text, so HTML and other
