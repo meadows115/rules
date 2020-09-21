@@ -5,8 +5,8 @@ funcs:
       function(text) {
         var words = text.split(" ")
         for (var i = 0; i < words.length; i++) {
-          if (((words[i].charAt(0) === "_" && words[i].charAt(words[i].length - 1) === "_") || 
-               (words[i].charAt(0) === "<" && words[i].charAt(words[i].length - 1) === ">")) && 
+          if (((words[i].charAt(0) === "_" && words[i].charAt(words[i].length - 1) === "_") ||
+               (words[i].charAt(0) === "<" && words[i].charAt(words[i].length - 1) === ">")) &&
                 words[i].length !== 1) {
             return true
           }
@@ -20,14 +20,20 @@ tenets:
         title: Avoid Annotations in Comments
         body: |
           Comments do not need extra formatting such as banners of stars. The generated output
-          may not even be presented in a fixed-width font, so don't depend on spacing for alignment—godoc, 
-          like gofmt, takes care of that. The comments are uninterpreted plain text, so HTML and other 
-          annotations such as _this_ will reproduce verbatim and should not be used. One adjustment godoc 
-          does do is to display indented text in a fixed-width font, suitable for program snippets. 
+          may not even be presented in a fixed-width font, so don't depend on spacing for alignment—godoc,
+          like gofmt, takes care of that. The comments are uninterpreted plain text, so HTML and other
+          annotations such as _this_ will reproduce verbatim and should not be used. One adjustment godoc
+          does do is to display indented text in a fixed-width font, suitable for program snippets.
           The package comment for the fmt package uses this to good effect.
+          Good code:
+            //This is a good comment example
+          Bad code:
+            /*
+            *This comment uses unnecessary_banners_of_stars and <annotations> 
+            */
       codelingo/review:
         comment: |
-          The comments are uninterpreted plain text, so HTML and other 
+          The comments are uninterpreted plain text, so HTML and other
           annotations such as _this_ and <this> will reproduce verbatim and should not be used.
     query: |
 
