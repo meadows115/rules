@@ -22,7 +22,7 @@ tenets:
   - name: comment-first-word-when-empty
     actions:
       codelingo/docs:
-        title: Comment First Word as Subject
+        title: Comment First Word When Empty
         body: |
           Each exported function should have a doc comment with a summary of the function
           to allow for an automated presentation of these doc comments.
@@ -30,12 +30,16 @@ tenets:
           
           ## Bad code
           ```
-          func Unnamed(){}
+          func Decrypt(data []byte){
+              ... 
+          }
           ```
           ## Good code
           ```
-          //Unnmaded is the first word and this is a summary of the function. 
-          func Unnamed(){}
+          // ({{Decrypt}}) is the first word and this is a summary of the function. 
+          func Decrypt(data []byte){
+              ... 
+          }
           ```
       codelingo/review:
         comment: |
