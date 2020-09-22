@@ -26,7 +26,7 @@ tenets:
         body: |
           Each exported function should have a doc comment with a summary of the function
           to allow for an automated presentation of these doc comments.
-          The first word in the summary should be the function name, followed by a description. 
+          The first word in the summary should be the ({{funcName}}) followed by a description. 
           
           ## Bad code
           ```
