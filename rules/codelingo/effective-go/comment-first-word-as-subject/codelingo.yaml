@@ -296,15 +296,13 @@ tenets:
 
           ## Bad code
           ```
-          /* This func comment should begin with 'bar'
-          */
-          func bar() {}
+          // This func comment should begin with 'Bar'
+          func Bar() {}
           ```
           ## Good code
           ```
-          /* foo is the first word
-          */
-          func foo() {}
+          // Foo is the first word
+          func Foo() {}
           ```
       codelingo/review:
         comment: |
