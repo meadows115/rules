@@ -291,8 +291,19 @@ tenets:
       codelingo/docs:
         title: Comment First Word as Subject
         body: |
-          Doc comments work best as complete sentences, which allow a wide variety of automated presentations.
+          Doc comments work best as complete sentences to allow a wide variety of automated presentations.
           The first sentence should be a summary that starts with the name being declared.
+
+          ## Bad code
+          ```
+          // This func comment should begin with 'Bar'
+          func Bar() {}
+          ```
+          ## Good code
+          ```
+          // Foo is the first word
+          func Foo() {}
+          ```
       codelingo/review:
         comment: |
           Every exported function in a program should have a doc comment. The first sentence should be a summary that starts with the name ({{funcName}}) being declared.
