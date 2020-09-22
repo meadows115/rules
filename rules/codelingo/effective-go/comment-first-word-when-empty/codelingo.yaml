@@ -21,7 +21,7 @@ funcs:
 tenets:
   - name: comment-first-word-when-empty
     actions:
- codelingo/docs:
+      codelingo/docs:
         title: Comment First Word as Subject
         body: |
           Each exported function should have a doc comment with a summary of the function
