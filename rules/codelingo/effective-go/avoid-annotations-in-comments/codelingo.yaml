@@ -28,7 +28,9 @@ tenets:
           
           ## Bad code
           ```
-          // This is a *bad* comment example
+          /**
+          * This is a bad_comment_example
+          */ 
           ```
           
           ## Good code
