@@ -36,7 +36,7 @@ tenets:
           ```
           ## Good code
           ```
-          // Decrypt is the first word and this is a summary of the function. 
+          // Decrypt uses the RSA algorithm to decrypt the supplied byte slice.  
           func Decrypt(data []byte){
               ... 
           }
