@@ -12,17 +12,22 @@ tenets:
 
           ## Bad code
           ```golang
-          // Contents returns the file's contents as a string but does not defer the function.
+          // Contents returns the file's contents as a string.
           func Contents(filename string) (string, error) {
-                ...
+              f, err := os.Open(filename)
+              if err != nil {
+                  return "", err
           }
           ```
           ## Good code
           ```golang
-          // Contents returns the file's contents as a string and defers the function.
+          // Contents returns the file's contents as a string.
           func Contents(filename string) (string, error) {
-                ...
-              defer f.Close()  // f.Close will run when we're finished.
+              f, err := os.Open(filename)
+              if err != nil {
+                  return "", err
+              }
+              defer f.Close()
           }
           ```
       codelingo/review:
