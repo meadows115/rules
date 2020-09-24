@@ -11,19 +11,17 @@ tenets:
           TODO if a function returns the open file, follow it and check if it is closed.
 
           ## Bad code
-          ```
-           // Contents returns the file's contents as a string but does not defer the function.
+          ```golang
+          // Contents returns the file's contents as a string but does not defer the function.
           func Contents(filename string) (string, error) {
                 ...
-              }
           }
           ```
           ## Good code
-          ```
+          ```golang
           // Contents returns the file's contents as a string and defers the function.
           func Contents(filename string) (string, error) {
                 ...
-              }
               defer f.Close()  // f.Close will run when we're finished.
           }
           ```

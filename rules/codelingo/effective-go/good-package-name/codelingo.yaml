@@ -34,12 +34,12 @@ tenets:
           name in the import determines which package is being used.
 
           ## Bad code
-          ```
+          ```golang
           // list_to_implement_a_linked_list is a package that implements a doubly linked list
           package list_to_implement_a_linked_list
           ```
           ## Good code
-          ```
+          ```golang
           // list is a package that implements a doubly linked list
           package list 
           ```
