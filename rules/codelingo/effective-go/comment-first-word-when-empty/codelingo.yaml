@@ -29,14 +29,15 @@ tenets:
           The first word in the summary should be the function name followed by a description. 
           
           ## Bad code
-          ```
+          ```golang
           func Decrypt(data []byte){
               ... 
           }
           ```
+
           ## Good code
-          ```
-          // Decrypt is the first word and this is a summary of the function. 
+          ```golang
+          // Decrypt uses the RSA algorithm to decrypt the supplied byte slice.  
           func Decrypt(data []byte){
               ... 
           }
