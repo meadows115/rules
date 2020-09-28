@@ -5,12 +5,13 @@ tenets:
         title: Initialize instance using composite literal
         body: |
           Sometimes the zero value isn't good enough and an initializing constructor 
-          is necessary. We can simplify the code using a composite literal, which is 
-          an expression that creates a new instance each time it is evaluated.
+          is necessary. We can reduce the number of initialization statements using a 
+          composite literal, which is an expression that creates a new instance each 
+          time it is evaluated.
           
           ## Bad code
           ```golang
-          // NewFile is a function containing an initializing constructor. 
+          // NewFile initializes a new File instance.
           func NewFile(fd int, name string) *File {
               if fd < 0 {
                   return nil
@@ -22,15 +23,21 @@ tenets:
               f.nepipe = 0
               return f
           }
+
           ```
           ## Good code
           ```golang
-          // NewFile is a function that is an initalising constructor that has been simplified by using a composite literal.  
+          // NewFile initializes a new File instance. 
           func NewFile(fd int, name string) *File {
               if fd < 0 {
                   return nil
               }
-              return &File{fd, name, nil, 0}
+              return &File {
+                      fd:      fd
+                      name:    name
+                      dirinfo: nil
+                      nepipe:  0
+              }
           }
           ```
       codelingo/review:
