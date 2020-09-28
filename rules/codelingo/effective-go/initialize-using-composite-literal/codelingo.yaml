@@ -33,10 +33,10 @@ tenets:
                   return nil
               }
               return &File {
-                      fd:      fd
-                      name:    name
-                      dirinfo: nil
-                      nepipe:  0
+                  fd:      fd
+                  name:    name
+                  dirinfo: nil
+                  nepipe:  0
               }
           }
           ```
