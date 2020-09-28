@@ -295,12 +295,13 @@ tenets:
           The first sentence should be a summary that starts with the name being declared.
 
           ## Bad code
-          ```
+          ```golang
           // This func comment should begin with 'Bar'
           func Bar() {}
           ```
+          
           ## Good code
-          ```
+          ```golang
           // Foo is the first word
           func Foo() {}
           ```
