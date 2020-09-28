@@ -17,11 +17,28 @@ tenets:
   - name: no-get-in-getters-name
     actions:
       codelingo/docs:
-        title: no Get at the start of Getters name
+        title: Get Not Needed At Beginning Of Getter's Name
         body: |
-          It's neither idiomatic nor necessary to put Get into the getter's name. If you have a field called owner (lower case, unexported), the getter method should be called Owner (upper case, exported), not GetOwner. 
+          It is not necessary to include Get in the getter's name. 
+          
+          ## Bad code
+          ```golang
+          // GetHeight returns the height of a rectangle. 
+          func (r *rect) GetHeight() int {
+              return r.height
+          }
+          ```
+
+          ## Good code
+          ```golang
+          // Height returns the height of a rectangle. 
+          func (r *rect) Height() int {
+              return r.height
+          }
+          ```
       codelingo/review:
-        comment: Do not use Get at the start of "{{methodName}}", use "{{fixName(varName)}}" instead [as specified in Effective Go](https://golang.org/doc/effective_go.html#Getters) 
+        comment: Do not use Get at the start of `{{methodName}}`, use `{{fixName(varName)}}` instead 
+        [as specified in Effective Go](https://golang.org/doc/effective_go.html#Getters) 
       codelingo/rewrite:
     query: |
       import codelingo/ast/go
