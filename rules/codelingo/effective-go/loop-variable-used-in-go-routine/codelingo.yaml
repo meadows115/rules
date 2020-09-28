@@ -18,10 +18,38 @@ tenets:
   - name: loop-variable-used-in-go-routine
     actions:
       codelingo/docs:
-        title: test
+        title: Loop Variable Used In Go Routine
         body: |
-            The loop variable is reused for each iteration, so it is shared across all goroutines. We need to make sure that it is unique for each goroutine. One way to do that, is passing the loop variable as an argument to the closure in the goroutine.
-            Note: This tenet assumes that loop variables are not shadowed inside goroutine. We need ssa to work to find the right loop variables in that case.
+            The loop variable is reused for each iteration, so it is shared across all 
+            goroutines. Therefore, we need to make sure that the loop variable is unique 
+            for each goroutine. One way to do that is by passing the loop variable as an 
+            argument to the closure in the goroutine. 
+            Note: This tenet assumes that loop variables are not shadowed inside each goroutine.
+            We would need ssa to work to find the right loop variables in that case.
+
+            ## Bad code
+            ```golang
+            // PrintValues loops over the range values and prints each value. 
+            func PrintValues(values []int) {
+                  for _, val := range values {
+                    go func() {
+                      fmt.Println(val)
+                    }()
+                  }
+            }
+            ```
+
+            ## Good code
+            ```golang
+            // PrintValues loops over the range values and prints each value.    
+            func PrintValues(values []int) {
+                 for _, val := range values {
+                    go func(val int) {
+                      fmt.Println(val)
+                    }(val)
+                  }
+            }
+            ```
       codelingo/review:
         comment: Pass any loop variables used in the goroutine as an argument to the closure. [as specified in Effective Go](https://golang.org/doc/effective_go.html#channels) 
 
