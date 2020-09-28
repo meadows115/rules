@@ -296,14 +296,18 @@ tenets:
 
           ## Bad code
           ```golang
-          // This func comment should begin with 'Bar'
-          func Bar() {}
+          // Return an empty string
+          func Foo() {
+            return "";
+          }
           ```
           
           ## Good code
           ```golang
-          // Foo is the first word
-          func Foo() {}
+          // Foo returns an empty string
+          func Foo() {
+            return "";
+          }
           ```
       codelingo/review:
         comment: |
