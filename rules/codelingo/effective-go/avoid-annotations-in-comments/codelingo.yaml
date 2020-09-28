@@ -27,14 +27,14 @@ tenets:
           The package comment for the fmt package uses this to good effect.
           
           ## Bad code
-          ```
+          ```golang
           /**
           * This is a bad_comment_example
           */ 
           ```
           
           ## Good code
-          ```
+          ```golang
           // This is a good comment example
           ```
       codelingo/review:
