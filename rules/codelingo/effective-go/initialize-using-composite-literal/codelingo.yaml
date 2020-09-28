@@ -4,9 +4,44 @@ tenets:
       codelingo/docs:
         title: Initialize instance using composite literal
         body: |
-          Sometimes the zero value isn't good enough and an initializing constructor is necessary. We can simplify the code using a composite literal, which is an expression that creates a new instance each time it is evaluated.
+          Sometimes the zero value isn't good enough and an initializing constructor 
+          is necessary. We can reduce the number of initialization statements using a 
+          composite literal, which is an expression that creates a new instance each 
+          time it is evaluated.
+          
+          ## Bad code
+          ```golang
+          // NewFile initializes a new File instance.
+          func NewFile(fd int, name string) *File {
+              if fd < 0 {
+                  return nil
+              }
+              f := new(File)
+              f.fd = fd
+              f.name = name
+              f.dirinfo = nil
+              f.nepipe = 0
+              return f
+          }
+
+          ```
+          ## Good code
+          ```golang
+          // NewFile initializes a new File instance. 
+          func NewFile(fd int, name string) *File {
+              if fd < 0 {
+                  return nil
+              }
+              return &File {
+                  fd:      fd
+                  name:    name
+                  dirinfo: nil
+                  nepipe:  0
+              }
+          }
+          ```
       codelingo/review:
-        comment: Initialize {{varName}} using a composite literal to simplify the code. [as specified in Effective Go](https://golang.org/doc/effective_go.html#composite_literals)
+        comment: Initialize `{{varName}}` using a composite literal to simplify the code. [as specified in Effective Go](https://golang.org/doc/effective_go.html#composite_literals)
     query: |
       import codelingo/ast/go
       
