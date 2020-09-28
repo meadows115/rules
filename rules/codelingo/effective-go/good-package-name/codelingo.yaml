@@ -27,7 +27,7 @@ tenets:
           package should use the same name to refer to its contents.
           By convention, packages are given lower case, single-word names. 
           There is no need for underscores or mixedCaps. Do not worry about 
-          collisions a priori. The package name is only the default name for 
+          potential naming collisions. The package name is only the default name for 
           imports; it need not be unique across all source code, and in the 
           rare case of a collision the importing package can choose a different 
           name to use locally. In any case, confusion is rare because the file
@@ -35,14 +35,14 @@ tenets:
 
           ## Bad code
           ```golang
-          // list_to_implement_a_linked_list is a package that implements a doubly linked list.
-          package list_to_implement_a_linked_list
+          // Package linked_list implements a doubly-linked list.
+          package linked_list
           ```
 
           ## Good code
           ```golang
-          // list is a package that implements a doubly linked list.
-          package list 
+          // Package linkedlist implements a doubly-linked list.
+          package linkedlist 
           ``` 
       codelingo/review:
         comment: |
