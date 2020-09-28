@@ -4,10 +4,24 @@ tenets:
       codelingo/docs:
         title: Package Comment
         body: |
-          Every package should have a package comment, a block comment preceding the package clause. 
-          For multi-file packages, the package comment only needs to be present in one file, and any one will do. 
-          The package comment should introduce the package and provide information relevant to the package as a 
-          whole. It will appear first on the godoc page and should set up the detailed documentation that follows.
+          Every package should have a block comment preceding the package clause. 
+          For multi-file packages, the package comment only needs to be present in 
+          one file and any one will do. The package comment should introduce the 
+          package and provide information relevant to the package as a whole. 
+          It will appear first on the godoc page and should set up the detailed 
+          documentation that follows.
+
+          ## Bad code
+          ```golang
+          package bytes
+          ```
+
+          ## Good code
+          ```golang
+          // Package bytes implements functions for 
+          // the manipulation of byte slices.
+          package bytes
+          ```
       codelingo/review:
         comment: |
           Every package should have a package comment, a block comment preceding the package clause.
