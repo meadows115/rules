@@ -27,7 +27,7 @@ tenets:
           The package comment for the [fmt package](https://golang.org/pkg/fmt/) uses this to good effect.
           ## Bad code
           ```golang
-          // Decrypt uses the <code>RSA</code> _algorithm_ to decrypt the <code>supplied byte slice</code>.  
+          // Decrypt uses the <code>RSA</code> _algorithm_ to decrypt the supplied byte slice.  
           func Decrypt(data []byte){
               ... 
           }
