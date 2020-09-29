@@ -45,7 +45,7 @@ tenets:
           ## Good code
           ```golang
           // AddInt returns the sum of two integers
-          func AddInt(x int, y int) int {
+          func AddInt(x, y int) int {
             return x + y
           }
           ```
