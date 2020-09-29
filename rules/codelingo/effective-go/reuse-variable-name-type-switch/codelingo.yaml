@@ -49,7 +49,7 @@ tenets:
           ```
       codelingo/review:
         comment: Reuse `{{varName2}}` instead of a new variable `{{varName1}}` in the type switch. 
-        [as specified in Effective Go](https://golang.org/doc/effective_go.html#type_switch) 
+        From [Effective Go](https://golang.org/doc/effective_go.html#type_switch).
       codelingo/rewrite:
     query: |
       import codelingo/ast/go
