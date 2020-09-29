@@ -10,7 +10,7 @@ tenets:
   - name: reuse-variable-name-type-switch
     actions:
       codelingo/docs:
-        title: Reuse Variable Name In A Type Switch
+        title: Reuse Variable Name in a Type Switch
         body: |
           If the switch declares a variable in the expression, 
           the variable will have the corresponding type in each clause. 
