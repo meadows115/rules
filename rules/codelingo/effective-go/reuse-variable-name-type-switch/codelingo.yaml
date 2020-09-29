@@ -37,7 +37,7 @@ tenets:
           ```golang
           // Print prints a different statement for int, string or default input types
           func Print(i interface{}) {
-              switch i := i.(type) {
+              switch i := i.(type) { // <-- reuse of variable i here.
               case int:
                 fmt.Printf("Twice %v is %v\n", i, i*2)
               case string:
