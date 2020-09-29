@@ -37,8 +37,7 @@ tenets:
           }
           ```
       codelingo/review:
-        comment: Do not use Get at the start of `{{methodName}}`, use `{{fixName(varName)}}` instead 
-        [as specified in Effective Go](https://golang.org/doc/effective_go.html#Getters) 
+        comment: Do not use Get at the start of `{{methodName}}`, use `{{fixName(varName)}}` instead. From [Effective Go](https://golang.org/doc/effective_go.html#Getters).
       codelingo/rewrite:
     query: |
       import codelingo/ast/go
