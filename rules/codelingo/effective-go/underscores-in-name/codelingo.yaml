@@ -25,6 +25,30 @@ funcs:
 tenets:
   - name: underscores-in-name
     actions:
+      codelingo/docs:
+        title: Avoid Underscores in Names
+        body: |
+          When writing a name (such as a function, interface and variable name etc), it is best to 
+          avoid using underscores to differentiate between words. The convention in Go is to use 
+          MixedCaps or mixedCaps rather than underscores to write multiword names.
+          For example, use DownloadFile() rather than Download_File().
+
+          ## Bad code
+          ```golang
+          // Add_Int returns the sum of two integers 
+          func Add_Int(x, y int) int {
+            return x + y
+          }
+          ```
+
+          ```        
+          ## Good code
+          ```golang
+          // AddInt returns the sum of two integers
+          func AddInt(x, y int) int {
+            return x + y
+          }
+          ```
       codelingo/review:
         comment: Use MixedCaps or mixedCaps rather than underscores to write multiword names. From [Effective Go](https://golang.org/doc/effective_go.html#mixed-caps).
     query: |
