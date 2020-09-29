@@ -11,26 +11,28 @@ tenets:
       codelingo/docs:
         title: Single Method Interface Name
         body: |
-          By convention, one-method interfaces are named by the method name plus an -er suffix 
-          Read, Write, Close, Flush, String and so on have canonical signatures and meanings
-          and it's productive to honor them and the function names they capture. To avoid confusion, 
-          don't give your method one of those names unless it has the same signature and meaning. Conversely, 
-          if your type implements a method with the same meaning as a method on a well-known type, give it the 
-          same name and signature; call your string-converter method String not ToString.
+          By convention, interfaces with one method are named by the method name plus an `-er` suffix. 
+          For example: `Reader`, `Writer`, `Formatter`, `CloseNotifier` etc.
+          Methods named `Read`, `Write`, `Close`, `Flush`, `String` and so on have canonical 
+          signatures and meanings and it's best to honor them and the function names they capture. 
+          To avoid confusion, don't give your method one of those names unless it has the same 
+          signature and meaning. Conversely, if your type implements a method with the same meaning 
+          as a method on a well-known type, give it the same name and signature; call 
+          your string-converter method `String` not `ToString`.
 
           ## Bad code
           ```golang
-          // ReadByte contains a basic Read method which populates the given byte slice with data. 
-          type ReadByte interface {
-            Read() []byte
+          // WebClient contains a basic Read method which downloads a file. 
+          type WebClient interface {
+            Download() []byte
           } 
           ```
 
           ## Good code
           ```golang
-          // Reader contains a basic Read method which populates the given byte slice with data.
-          type Reader interface {
-            Read() []byte
+          // Downloader contains a basic Download method which downloads a file.
+          type Downloader interface {
+            Download() []byte
           }
           ```
       codelingo/review:
