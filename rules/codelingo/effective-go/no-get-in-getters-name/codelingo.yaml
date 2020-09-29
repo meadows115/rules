@@ -19,7 +19,7 @@ tenets:
       codelingo/docs:
         title: Getters Don't Need a "Get" Prefix
         body: |
-          It is not necessary to include Get in the getter's name. 
+          It is not necessary to include "Get" in a getter method's name. The Go convention is to use the same name as the underlying field, but capitalized to export.
           
           ## Bad code
           ```golang
