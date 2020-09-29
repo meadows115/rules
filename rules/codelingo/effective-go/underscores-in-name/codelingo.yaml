@@ -36,7 +36,7 @@ tenets:
           ## Bad code
           ```golang
           // Add_Int returns the sum of two integers 
-          func Add_Int(x int, y int) int {
+          func Add_Int(x, y int) int {
             return x + y
           }
           ```
