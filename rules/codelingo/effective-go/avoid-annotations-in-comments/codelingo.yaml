@@ -45,8 +45,7 @@ tenets:
         comment: |
           The comments are uninterpreted plain text, so HTML and other
           annotations such as _this_ and <this> will reproduce verbatim and should not be used.
-          The package comment for the fmt package uses this to good effect. 
-          From [effective go](https://golang.org/pkg/fmt/). 
+          From [effective go](https://golang.org/doc/effective_go.html#commentary). 
     query: |
 
       import codelingo/ast/go
