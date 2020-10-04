@@ -10,11 +10,46 @@ tenets:
   - name: reuse-variable-name-type-switch
     actions:
       codelingo/docs:
-        title: Reuse the variable name in a type switch
+        title: Reuse Variable Name in a Type Switch
         body: |
-          If the switch declares a variable in the expression, the variable will have the corresponding type in each clause. It's also idiomatic to reuse the name in such cases, in effect declaring a new variable with the same name but a different type in each case.
+          If the switch declares a variable in the expression, 
+          the variable will have the corresponding type in each clause. 
+          It's also idiomatic to reuse the name in such cases, in effect 
+          declaring a new variable with the same name but a different 
+          type in each case.
+
+          ## Bad code
+          ```golang
+          // Print prints a different statement for int, string or default input types
+          func Print(i interface{}) {
+              switch v := i.(type) {
+              case int:
+                fmt.Printf("Twice %v is %v\n", v, v*2)
+              case string:
+                fmt.Printf("%q is %v bytes long\n", v, len(v))
+              default:
+                fmt.Printf("I don't know about type %T!\n", v)
+              }
+          }
+          ```
+
+          ## Good code
+          ```golang
+          // Print prints a different statement for int, string or default input types
+          func Print(i interface{}) {
+              switch i := i.(type) { // <-- reuse of variable i here.
+              case int:
+                fmt.Printf("Twice %v is %v\n", i, i*2)
+              case string:
+                fmt.Printf("%q is %v bytes long\n", i, len(i))
+              default:
+                fmt.Printf("I don't know about type %T!\n", i)
+              }
+          }
+          ```
       codelingo/review:
-        comment: Reuse `{{varName2}}` instead of a new variable `{{varName1}}` in the type switch. [as specified in Effective Go](https://golang.org/doc/effective_go.html#type_switch) 
+        comment: Reuse `{{varName2}}` instead of a new variable `{{varName1}}` in the type switch. 
+        From [Effective Go](https://golang.org/doc/effective_go.html#type_switch).
       codelingo/rewrite:
     query: |
       import codelingo/ast/go
