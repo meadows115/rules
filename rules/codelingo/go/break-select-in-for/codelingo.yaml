@@ -17,7 +17,7 @@ tenets:
           for {
             select {
             case msg1 := <-c:
-              fmt.Println("received", msg1)
+              fmt.Println("received", msg)
               break // Does not break out of the `for` loop
             case <-ctx.Done():
               return ctx.Err()
@@ -59,4 +59,3 @@ tenets:
             tok == "break"
             exclude:
               go.ident
-
