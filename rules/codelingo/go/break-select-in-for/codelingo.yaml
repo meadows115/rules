@@ -34,7 +34,7 @@ tenets:
         loop:
           for {
             select {
-            case msg1 := <-c:
+            case msg := <-c:
               fmt.Println("received", msg)
               break loop // Breaks out of the `for` loop
             case <-ctx.Done():
