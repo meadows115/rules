@@ -16,7 +16,7 @@ tenets:
         func Receiver(ctx context.Context, c <-chan string) error {
           for {
             select {
-            case msg1 := <-c:
+            case msg := <-c:
               fmt.Println("received", msg)
               break // Does not break out of the `for` loop
             case <-ctx.Done():
