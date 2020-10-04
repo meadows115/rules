@@ -22,7 +22,7 @@ tenets:
 
           ## Bad code
           ```golang
-          // WebClient contains a basic Read method which downloads a file. 
+          // WebClient contains a basic Download method which downloads a file. 
           type WebClient interface {
             Download() []byte
           } 
@@ -55,5 +55,4 @@ tenets:
                   go.ident:
                     name as methodName
                     isBadName(ifName, methodName)
-
 
