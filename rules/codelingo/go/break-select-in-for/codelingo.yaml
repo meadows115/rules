@@ -1,6 +1,49 @@
 tenets:
   - name: break-select-in-for
-    flows:
+    actions:
+      codelingo/docs:
+        title: Break To Label From `for` loop
+        body: |
+        It is common practice to use a `break` to exit a `for` loop, and it is also
+        possible to use a `break` to exit a select statement. However, when we use 
+        a `break` statement inside of a `select` statement that has a parent `for` 
+        loop, the `break` will only break to the inermost select, and not the expected
+        `for` loop. To avoid this, use a label on the `for` loop and break to that instead.
+        
+        ## Bad code
+        ```golang
+        // Receiver receives and prints a message as it arrives
+        func Receiver(ctx context.Context, c <-chan string) error {
+          for {
+            select {
+            case msg := <-c:
+              fmt.Println("received", msg)
+              break // Does not break out of the `for` loop
+            case <-ctx.Done():
+              return ctx.Err()
+            }
+          }
+          return nil
+        } 
+        ```
+
+        ## Good code
+        ```golang
+        // Receiver receives and prints a message as it arrives
+        func Receiver(ctx context.Context, c <-chan string) error {
+        loop:
+          for {
+            select {
+            case msg := <-c:
+              fmt.Println("received", msg)
+              break loop // Breaks out of the `for` loop
+            case <-ctx.Done():
+              return ctx.Err()
+            }
+          }
+          return nil
+        }
+        ```
       codelingo/review:
         comment: |
           This `break` statement only breaks to the innermost select, rather than the parent `for` loop.
@@ -16,4 +59,3 @@ tenets:
             tok == "break"
             exclude:
               go.ident
-
