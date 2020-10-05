@@ -14,8 +14,55 @@ funcs:
 tenets:
   - name: check-reader-bytes-before-err
     actions:
+      codelingo/docs:
+        title: Check Reader Bytes Before `err`
+        body: |
+          When `Read` encounters an error or end-of-file (EOF) condition, it will return the number
+          of specified bytes read and the error encountered. It is Go convention to always process the
+          bytes returned before considering the error `err`. Doing this correctly will handle I/O errors
+          that may happen after reading the bytes and also both of the allowed EOF behaviors.
+
+          ## Bad code
+          ```golang
+          // ReadFile reads a file up to the expected 6 bytes and prints the output
+          func ReadFile(){
+            file, err := os.Open("FileName.txt")
+              if err != nil {
+                panic(err)
+              }
+              defer file.Close()
+
+              buff := make([]byte, 6)
+
+          	  n, err := file.Read(buff)
+              if err != nil { // bytes returned not checked before err
+                panic(err)
+              }
+              fmt.Println("read", n, "data:", string(buff))
+          }
+          ```
+
+          ## Good code 
+          ```golang
+          // ReadFile reads a file up to the expected 6 bytes and prints the output
+          func ReadFile(){
+            file, err := os.Open("FileName.txt")
+              if err != nil {
+                panic(err)
+              }
+              defer file.Close()
+
+              buff := make([]byte, 6)
+          	  n, err := file.Read(buff)
+              fmt.Println("read", n, "data:", string(buff)) // bytes returned checked before err
+              if err != nil {
+                panic(err)
+              }
+          }
+          ```
       codelingo/review:
-        comment: Check io.Reader bytes read (and process) before checking err
+        comment: Check io.Reader bytes read (and process) before checking `err`. 
+        From [effective go](https://golang.org/pkg/io/#Reader)/
     query: |
       import codelingo/ast/go
 
