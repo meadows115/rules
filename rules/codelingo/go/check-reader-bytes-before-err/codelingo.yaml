@@ -24,39 +24,58 @@ tenets:
 
           ## Bad code
           ```golang
-          // ReadFile reads a file up to the expected 6 bytes and prints the output
-          func ReadFile() {
-            file, err := os.Open("FileName.txt")
+          // PrintFile reads a file up to the expected 6 bytes and prints the output
+          func PrintFile(filename string) error {
+            file, err := os.Open(filename)
             if err != nil {
-              panic(err)
+              return err
             }
             defer file.Close()
 
-            buff := make([]byte, 6)
+            for {
+              buff := make([]byte, 6)
+              n, err := file.Read(buff)
+              if err != nil {
+                switch err {
+                case io.EOF:
+                  return nil
+                default:
+                  return err
+                }
+              }
 
-            n, err := file.Read(buff)
-            if err != nil { // bytes returned not checked before err
-              panic(err)
+              if n > 0 {
+                fmt.Println("read", n, "bytes:", string(buff)) // bytes returned checked after err
+              }
             }
-            fmt.Println("read", n, "data:", string(buff))
           }
           ```
 
           ## Good code 
           ```golang
-          // ReadFile reads a file up to the expected 6 bytes and prints the output
-          func ReadFile() {
-            file, err := os.Open("FileName.txt")
+          // PrintFile reads a file up to the expected 6 bytes and prints the output
+          func PrintFile(filename string) error {
+            file, err := os.Open(filename)
             if err != nil {
-              panic(err)
+              return err
             }
             defer file.Close()
 
-            buff := make([]byte, 6)
-            n, err := file.Read(buff)
-            fmt.Println("read", n, "data:", string(buff)) // bytes returned checked before err
-            if err != nil {
-              panic(err)
+            for {
+              buff := make([]byte, 6)
+              n, err := file.Read(buff)
+              if n > 0 {
+                fmt.Println("read", n, "bytes:", string(buff)) // bytes returned checked before err
+              }
+
+              if err != nil {
+                switch err {
+                case io.EOF:
+                  return nil
+                default:
+                  return err
+                }
+              }
             }
           }
           ```
