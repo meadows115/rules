@@ -81,7 +81,7 @@ tenets:
           ```
       codelingo/review:
         comment: Check io.Reader bytes read (and process) before checking `err`. 
-        From [effective go](https://golang.org/pkg/io/#Reader)/
+        From [Effective Go](https://golang.org/pkg/io/#Reader)
     query: |
       import codelingo/ast/go
 
