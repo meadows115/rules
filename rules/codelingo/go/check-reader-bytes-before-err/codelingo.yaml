@@ -14,8 +14,74 @@ funcs:
 tenets:
   - name: check-reader-bytes-before-err
     actions:
+      codelingo/docs:
+        title: Check Reader Bytes Before `err`
+        body: |
+          When `Read` encounters an error or end-of-file (EOF) condition, it will return the number
+          of specified bytes read and the error encountered. It is Go convention to always process the
+          bytes returned before considering the error `err`. Doing this correctly will handle I/O errors
+          that may happen after reading the bytes and also both of the allowed EOF behaviors.
+
+          ## Bad code
+          ```golang
+          // PrintFile reads from the supplied file and prints a line for each 6 bytes read.
+          func PrintFile(filename string) error {
+            file, err := os.Open(filename)
+            if err != nil {
+              return err
+            }
+            defer file.Close()
+
+            for {
+              buff := make([]byte, 6)
+              n, err := file.Read(buff)
+              if err != nil {
+                switch err {
+                case io.EOF:
+                  return nil
+                default:
+                  return err
+                }
+              }
+
+              if n > 0 {
+                fmt.Println("read", n, "bytes:", string(buff)) // bytes returned checked after err
+              }
+            }
+          }
+          ```
+
+          ## Good code 
+          ```golang
+          // PrintFile reads from the supplied file and prints a line for each 6 bytes read.
+          func PrintFile(filename string) error {
+            file, err := os.Open(filename)
+            if err != nil {
+              return err
+            }
+            defer file.Close()
+
+            for {
+              buff := make([]byte, 6)
+              n, err := file.Read(buff)
+              if n > 0 {
+                fmt.Println("read", n, "bytes:", string(buff)) // bytes returned checked before err
+              }
+
+              if err != nil {
+                switch err {
+                case io.EOF:
+                  return nil
+                default:
+                  return err
+                }
+              }
+            }
+          }
+          ```
       codelingo/review:
-        comment: Check io.Reader bytes read (and process) before checking err
+        comment: Check io.Reader bytes read (and process) before checking `err`. 
+        From [Effective Go](https://golang.org/pkg/io/#Reader)
     query: |
       import codelingo/ast/go
 
