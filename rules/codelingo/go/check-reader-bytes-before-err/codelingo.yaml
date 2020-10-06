@@ -53,7 +53,7 @@ tenets:
 
           ## Good code 
           ```golang
-          // PrintFile reads a file up to the expected 6 bytes and prints the output
+          // PrintFile reads from the supplied file and prints a line for each 6 bytes read.
           func PrintFile(filename string) error {
             file, err := os.Open(filename)
             if err != nil {
