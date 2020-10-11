@@ -2,7 +2,7 @@ tenets:
   - name: deprecated
     actions:
       codelingo/docs:
-        title: Add Deprecated Notice on Deprecated Functions
+        title: Add Deprecated Notice on Deprecated APIs
         body: |
           It is Go convention to add a deprecation notice to godocs on APIs that 
           have deprecated. Begin a comment with `Deprecated: ` and follow with a 
