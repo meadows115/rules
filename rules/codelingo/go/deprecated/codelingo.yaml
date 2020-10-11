@@ -1,8 +1,45 @@
 tenets:
   - name: deprecated
     actions:
+      codelingo/docs:
+        title: Add Deprecated Notice on Deprecated Functions
+        body: |
+          It is Go convention to add a deprecation notice to godocs on APIs that 
+          have deprecated. Begin a comment with `Deprecated: ` and follow with a 
+          recommended improvement. Additionally, it is encouraged that users do not 
+          continue to depend on the deprecated APIs where possible.
+          
+          ## Bad code
+          ```golang
+          // Execer is an optional interface that may be implemented by a Conn. 
+          //
+          // If a Conn does not implement Execer, the sql package's DB.Exec will
+          // first prepare a query, execute the statement, and then close the
+          // statement.
+          //
+          // Exec may return ErrSkip.
+          type Execer interface {
+            Exec(query string, args []Value) (Result, error)
+          }
+          ```
+
+          ## Good code
+          ```golang
+          // Execer is an optional interface that may be implemented by a Conn. 
+          //
+          // If a Conn does not implement Execer, the sql package's DB.Exec will
+          // first prepare a query, execute the statement, and then close the
+          // statement.
+          //
+          // Exec may return ErrSkip.
+          //
+          // Deprecated: Drivers should implement ExecerContext instead (or additionally).
+          type Execer interface {
+            Exec(query string, args []Value) (Result, error)
+          }
+          ```
       codelingo/review:
-        comment: This is a call to a [deprecated function](https://rakyll.org/deprecated/).
+        comment: Use a deprecation notice where necessary. From [Rakyll](https://rakyll.org/deprecated/).
     query: |
       import codelingo/ast/go
 
