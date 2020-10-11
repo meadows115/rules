@@ -1,8 +1,40 @@
 tenets:
   - name: counter-not-incremented
     actions:
+      codelingo/docs:
+        title: Counter Not Incremented
+        body: |
+          When writing a `for` or `while` loop, it is important to increment or decrement a counter to avoid
+          an infinte loop occuring.
+
+          ## Bad code
+          ```golang
+          // Countdown will countdown for 10 seconds
+          func Countdown() {
+            i := 10
+            for i > 0 {
+              fmt.Println(i)
+              time.Sleep(time.Second)
+            }
+            fmt.Println("Countdown Complete")
+          }
+          ```
+
+          ## Good code
+          ```golang
+          // Countdown will countdown for 10 seconds
+          func Countdown() {
+            i := 10
+            for i > 0 {
+              fmt.Println(i)
+              time.Sleep(time.Second)
+              i = i - 1
+            }
+            fmt.Println("Countdown Complete")
+          }
+          ```
       codelingo/review:
-        comment: This for loop does not increment or decrement the counter and will cause an infinite loop.
+        comment: Increment or decrement a counter when using a `for` loop to avoid an infinite loop.
     query: |
       import codelingo/ast/go
 
