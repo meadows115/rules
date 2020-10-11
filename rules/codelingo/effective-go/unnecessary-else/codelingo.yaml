@@ -25,7 +25,7 @@ tenets:
             if os.IsNotExist(err) {
               return false
             } else {
-              fmt.Println("File descriptor exists. Checking whether descriptor is a directory") // Unnecessary else statement
+              fmt.Println("File descriptor exists. Checking whether descriptor is a directory")
             }
             return !info.IsDir()
           }
