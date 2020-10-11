@@ -24,7 +24,7 @@ tenets:
             info, err := os.Stat(filename)
             if os.IsNotExist(err) {
               return false
-            } else {
+            } else { // Unnecessary else statement
               fmt.Println("File descriptor exists. Checking whether descriptor is a directory")
             }
             return !info.IsDir()
