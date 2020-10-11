@@ -12,7 +12,37 @@ tenets:
       codelingo/docs:
         title: Unnecessary Else 
         body: |
-           When an if statement doesn't flow into the next statement—that is, the body ends in break, continue, goto, or return—the unnecessary else is omitted.
+          When an `if` statement doesn't flow into the next statement, it is Go
+          convention to not include an `else` statement. For instance, if the
+          `if` statement ends in a break, continue, goto or return, then the
+          `else` statement is omitted.
+
+          ## Bad code 
+          ```golang
+          // IsFile checks whether a specific file exists or is in a directory
+          func IsFile(filename string) bool {
+            info, err := os.Stat(filename)
+            if os.IsNotExist(err) {
+              return false
+            } else { // Unnecessary else statement
+              fmt.Println("File descriptor exists. Checking whether descriptor is a directory")
+            }
+            return !info.IsDir()
+          }
+          ```
+
+          ## Good code 
+          ```golang
+          // IsFile checks whether a specific file exists or is in a directory
+          func IsFile(filename string) bool {
+            info, err := os.Stat(filename)
+            if os.IsNotExist(err) {
+              return false
+            }
+            fmt.Println("File descriptor exists. Checking whether descriptor is a directory")
+            return !info.IsDir()
+          }
+          ```
       codelingo/review:
         comment: Omit unnecessary else when `if` doesn't flow into the next statement. [as specified in Effective Go](https://golang.org/doc/effective_go.html#control-structures) 
       codelingo/rewrite:
