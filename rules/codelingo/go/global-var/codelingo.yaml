@@ -16,7 +16,6 @@ tenets:
 
           // IsProduction checks whether two strings are equal and returns a boolean value
           func IsProduction(env string) bool {
-            const prodEnv = "production"
             return env == prodEnv
           }
           ```
@@ -24,7 +23,8 @@ tenets:
           ## Good code
           ```golang
           // IsProduction checks whether two strings are equal and returns a boolean value
-          func IsProductionGood(env string) bool {
+          func IsProduction(env string) bool {
+            const prodEnv = "production"
             return env == prodEnv
           }
           ```
