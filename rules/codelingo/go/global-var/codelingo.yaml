@@ -2,13 +2,34 @@ tenets:
   - name: global-variable
     actions:
       codelingo/docs:
-        title: Global Variable
+        title: Avoid Using Global Variables
         body: |
           Global variables used within functions are not visible in 
           the functions signature. This complicates testing, reduces readability 
-          and increases the complexity of code.
+          and increases the complexity of code. Therefore, it is best to avoid the use
+          of global variables. 
+
+          ## Bad code
+          ```golang 
+          // Declare global variable
+          var prodEnv = "production"
+
+          // IsProduction checks whether two strings are equal and returns a boolean value
+          func IsProduction(env string) bool {
+            return env == prodEnv
+          }
+          ```
+
+          ## Good code
+          ```golang
+          // IsProduction checks whether two strings are equal and returns a boolean value
+          func IsProduction(env string) bool {
+            const prodEnv = "production"
+            return env == prodEnv
+          }
+          ```
       codelingo/review:
-        comment: Avoid global variables to improve readability and reduce complexity
+        comment: Avoid global variables to improve readability and reduce complexity.
     query: |
       import codelingo/ast/go
       
