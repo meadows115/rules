@@ -11,21 +11,21 @@ tenets:
 
           ## Bad code
           ```golang 
-          // Global variable declaration
-          var a string = ""
+          // Declare global variable
+          var prodEnv = "production"
 
-          // CompareStrings compares two strings lexicographically
-          func CompareStrings() {
-            fmt.Println(strings.Compare("StringOne", a))
+          // IsProduction checks whether two strings are equal and returns a boolean value
+          func IsProduction(env string) bool {
+            const prodEnv = "production"
+            return env == prodEnv
           }
           ```
 
           ## Good code
           ```golang
-          // CompareStrings compares two strings lexicographically
-          func CompareStrings() {
-            a := ""
-            fmt.Println(strings.Compare("StringOne", a))
+          // IsProduction checks whether two strings are equal and returns a boolean value
+          func IsProductionGood(env string) bool {
+            return env == prodEnv
           }
           ```
       codelingo/review:
