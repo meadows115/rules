@@ -21,20 +21,36 @@ tenets:
 
           ## Bad code
           ```golang
-          // DatabaseRoot returns the database's host and port information  
-          func (this Database) DatabaseRoot() {
-              return this.Host + ":" + db.port
+          type Database struct {
+            Host string
+            Port int
+            User string
           }
-          this.DatabaseRoot();
+          // DatabaseRoot returns the database's host and port information
+          func (d Database) DatabaseRoot() {
+            return d.Host + ":" + db.port
+          }
+          // User returns the database's user information
+          func (data Database) User() {
+            return data.User
+          }
           ```
 
           ## Good code
           ```golang
-          // DatabaseRoot returns the database's host and port information 
-          func (d Database) DatabaseRoot() {
-              return d.Host + ":" + db.port
+          type Database struct {
+            Host string
+            Port int
+            User string
           }
-          d.DatabaseRoot();
+          // DatabaseRoot returns the database's host and port information
+          func (d Database) DatabaseRoot() {
+            return d.Host + ":" + db.port
+          }
+          // User returns the database's user information
+          func (d Database) User() {
+            return d.User
+          }
           ```
       codelingo/review:
         comment: If you call the receiver `{{receiverName1}}` in `{{methodName1}}` method, don't call 
