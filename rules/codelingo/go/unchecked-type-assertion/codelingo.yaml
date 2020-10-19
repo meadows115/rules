@@ -1,8 +1,45 @@
 tenets:
   - name: unchecked-type-assertion
     actions:
+      codelingo/docs:
+        title: Check Type Assertions
+        body: | 
+          A type assertion provides access to an interface value's underlying concrete value.
+          If the value is not the expected type, the program will panic and provide a runtime
+          error. Therefore, it is important to use the comma ok syntax `x,ok :=y` to guard 
+          against this error and to safely check if the value is of the expected type.
+
+          ## Bad code
+          ```golang
+          // UserNameFromContext returns a users username from the context
+          func UserNameFromContext(ctx context.Context) (string, error) {
+            userName := ctx.Value("userName")
+            if userName == nil {
+              return "", errors.New("no user name found in context")
+            }
+            userNameStr = userName.(String) // No check type assertion, will panic if value is not a String
+            return userNameStr, nil
+          }
+          ```
+
+          ## Good code
+          ```golang
+          // UserNameFromContext returns a users username from the context
+          func UserNameFromContext(ctx context.Context) (string, error) {
+            userName := ctx.Value("userName")
+            if userName == nil {
+              return "", errors.New("no user name found in context")
+            }
+            userNameStr, ok := userName.(string) // Check type assertion
+            if !ok {
+              return "", errors.New("username in context is not a string")
+            }
+            return userNameStr, nil
+          }
+          ```
       codelingo/review:
         comment: Unchecked type assertions can cause panics. Check for success with the x, ok := y.(type) style.
+        From [Effective Go](https://golang.org/doc/effective_go.html#interface_conversions).
     query: |
       import codelingo/ast/go
 
