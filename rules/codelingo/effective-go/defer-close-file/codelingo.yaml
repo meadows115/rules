@@ -12,23 +12,44 @@ tenets:
 
           ## Bad code
           ```golang
-          // Contents returns the file's contents as a string but does not defer the function.
-          func Contents(filename string) (string, error) {
-                ...
-              }
+          // CopyFile copies a file from dst to src
+          func CopyFile(dstName, srcName string) (written int64, err error) {
+            src, err := os.Open(srcName)
+            if err != nil {
+              return
+            }
+
+            dst, err := os.Create(dstName)
+            if err != nil {
+              return
+            }
+
+            return io.Copy(dst, src)
           }
+          ```
 
           ## Good code
           ```golang
-          // Contents returns the file's contents as a string and defers the function.
-          func Contents(filename string) (string, error) {
-                ...
-              }
-              defer f.Close()  // f.Close will run when we're finished.
+          // CopyFile copies a file from dst to src
+          func CopyFile(dstName, srcName string) (written int64, err error) {
+            src, err := os.Open(srcName)
+            if err != nil {
+              return
+            }
+            defer src.Close()
+
+            dst, err := os.Create(dstName)
+            if err != nil {
+              return
+            }
+            defer dst.Close()
+
+            return io.Copy(dst, src)
           }
           ```
       codelingo/review:
-        comment: Add `defer {{fileName}}.Close()` after opening the file `{{fileName}}`. . [as specified in Effective Go](https://golang.org/doc/effective_go.html#defer)
+        comment: Add `defer {{fileName}}.Close()` after opening the file `{{fileName}}`. 
+        From [Golang](https://yourbasic.org/golang/defer/) and [Effective Go](https://golang.org/doc/effective_go.html#defer).
     query: |
       import codelingo/ast/go
       
