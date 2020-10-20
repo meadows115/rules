@@ -6,7 +6,7 @@ tenets:
         body: | 
           A type assertion provides access to an interface value's underlying concrete value.
           If the value is not the expected type, the program will panic and provide a runtime
-          error. Therefore, it is important to use the comma ok syntax `x,ok :=y` to guard 
+          error. Therefore, it is important to use the comma ok syntax `x, ok := y` to guard 
           against this error and to safely check if the value is of the expected type.
 
           ## Bad code
