@@ -11,7 +11,7 @@ tenets:
 
           ## Bad code
           ```golang
-          // UserNameFromContext returns a users username from the context
+          // UserNameFromContext returns a user's username from the context
           func UserNameFromContext(ctx context.Context) (string, error) {
             userName := ctx.Value("userName")
             if userName == nil {
