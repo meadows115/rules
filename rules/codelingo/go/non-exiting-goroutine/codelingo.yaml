@@ -1,8 +1,23 @@
 tenets:
   - name: non-exiting-goroutine
     actions:
+      codelingo/docs:
+        title: Always Exit A Goroutine
+        body: | 
+          In Go, it is important to ensure a Goroutine is able to successfully run to completion.
+          By making sure the Goroutine exits, a resource leak can be avoided. 
+
+          ## Bad code
+          ```golang
+
+          ```
+
+          ## Good code
+          ```golang
+
+          ```
       codelingo/review:
-        comment: This goroutine does not exit and may cause a resource leak.
+        comment: This goroutine does not exit and may cause a resource leak. From [Effective Go](https://golang.org/doc/effective_go.html#goroutines).
     query: |
       import codelingo/ast/go
 
