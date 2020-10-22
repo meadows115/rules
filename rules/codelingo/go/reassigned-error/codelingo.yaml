@@ -23,8 +23,16 @@ tenets:
 
           ## Bad code
           ```golang
-          \\
-
+          \\ FileAppendOnly opens a file and appends an error code if the file is unable to be opened
+          func setFileAppendOnly(filename string) error {
+            file, err := os.Open("userdata.json")
+            defer file.Close()
+            err = file.Chmod(os.ModeAppend) // `err` not checked before re-assignment
+            if err != nil { 
+              return err
+            }
+            return nil
+          }
           ```
 
           ## Good code
@@ -32,6 +40,9 @@ tenets:
           // FileAppendOnly opens a file and appends an error code if the file is unable to be opened
           func FileAppendOnly(filename string) error {
             file, err := os.Open("userdata.json")
+            if err != nil {
+              return err
+            }
             defer file.Close()
             err = file.Chmod(os.ModeAppend)
             if err != nil {
