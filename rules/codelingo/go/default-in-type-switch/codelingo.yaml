@@ -1,49 +1,50 @@
-tenets:
-  - name: default-in-type-switch
-    actions:
-      codelingo/docs:
-        title: Default In Type Switch
+--- 
+tenets: 
+  - 
+    actions: 
+      codelingo/docs: 
         body: |
-          It is good practice to always use a `default` clause in a type switch to catch an
-          unexpected case. 
-
-          ## Bad code
-          ```golang
-          // Print prints a different statement for int, string or default input types
-          func Print(i interface{}) {
-            switch i := i.(type) {
-            case int:
-              fmt.Printf("Twice %v is %v\n", i, i*2)
-            case string:
-              fmt.Printf("%q is %v bytes long\n", i, len(i))
+            It is good practice to always use a `default` clause in a type switch to catch an
+            unexpected case. 
+            
+            ## Bad code
+            ```golang
+            // Print prints a different statement for int, string or default input types
+            func Print(i interface{}) {
+              switch i := i.(type) {
+              case int:
+                fmt.Printf("Twice %v is %v\n", i, i*2)
+              case string:
+                fmt.Printf("%q is %v bytes long\n", i, len(i))
+              }
             }
-          }
-          ```
-
-          ## Good code
-          ```golang
-          // Print prints a different statement for int, string or default input types
-          func Print(i interface{}) {
-            switch i := i.(type) {
-            case int:
-              fmt.Printf("Twice %v is %v\n", i, i*2)
-            case string:
-              fmt.Printf("%q is %v bytes long\n", i, len(i))
-            default:
-              fmt.Printf("I don't know about type %T!\n", i)
+            ```
+            
+            ## Good code
+            ```golang
+            // Print prints a different statement for int, string or default input types
+            func Print(i interface{}) {
+              switch i := i.(type) {
+              case int:
+                fmt.Printf("Twice %v is %v\n", i, i*2)
+              case string:
+                fmt.Printf("%q is %v bytes long\n", i, len(i))
+              default:
+                fmt.Printf("I don't know about type %T!\n", i)
+              }
             }
-          }
-          ```
-      codelingo/review:
-        comment: Always include a default case when using a type switch.
-        From [Effective Go](https://golang.org/doc/effective_go.html#type_switch).
+            ```
+        title: "Default In Type Switch"
+      codelingo/review: 
+        comment: "Always include a default case when using a type switch. From [Effective Go](https://golang.org/doc/effective_go.html#type_switch)."
+    name: default-in-type-switch
     query: |
-      import codelingo/ast/go
-
-      @review comment
-      go.type_switch_stmt(depth = any):
-        exclude:
-          go.case_clause(depth = any):
-            go.body
-            exclude:
-              go.list
+        import codelingo/ast/go
+        
+        @review comment
+        go.type_switch_stmt(depth = any):
+          exclude:
+            go.case_clause(depth = any):
+              go.body
+              exclude:
+                go.list
