@@ -7,6 +7,7 @@ tenets:
             Do not store Contexts inside a struct type. Instead, pass them explicitly
             in functions. The one exception is for methods whose signature must match 
             an interface in the standard library or in a third party library.
+            For more information, please see the godocs (https://github.com/golang/go/wiki/CodeReviewComments#contexts).
             
             ## Bad code
             ```golang
