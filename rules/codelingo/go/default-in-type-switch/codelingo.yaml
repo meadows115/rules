@@ -5,7 +5,8 @@ tenets:
       codelingo/docs: 
         body: |
             It is good practice to always use a `default` clause in a type switch to catch an
-            unexpected case. 
+            unexpected case. For more information regarding type switches, please read the 
+            godocs (https://golang.org/doc/effective_go.html#type_switch).
             
             ## Bad code
             ```golang
