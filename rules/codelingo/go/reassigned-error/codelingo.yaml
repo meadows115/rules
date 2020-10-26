@@ -19,13 +19,12 @@ tenets:
     actions: 
       codelingo/docs: 
         body: |
-            When re-assigning a variable in Go, it is convention to check the `err` prior to
-            doing so. First, check that the `err` is not equal to `nil` and then re-assign
-            the variable to avoid a panic.
+            When re-assigning an `err` variable in Go, always check errors before 
+            executing dependent code.
             
             ## Bad code
             ```golang
-            \\ FileAppendOnly opens a file and appends an error code if the file is unable to be opened
+            // FileAppendOnly sets a given file's mode to append only.
             func setFileAppendOnly(filename string) error {
               file, err := os.Open("userdata.json")
               defer file.Close()
@@ -39,7 +38,7 @@ tenets:
             
             ## Good code
             ```golang
-            // FileAppendOnly opens a file and appends an error code if the file is unable to be opened
+            // FileAppendOnly sets a given file's mode to append only.
             func FileAppendOnly(filename string) error {
               file, err := os.Open("userdata.json")
               if err != nil {
@@ -53,9 +52,9 @@ tenets:
               return nil
             }
             ```
-        title: "Check `err` Before Variable Re-Assignment"
+        title: "Check `err` Prior To Re-Assignment"
       codelingo/review: 
-        comment: "Check the `err` before variable re-assignment to avoid the program terminating with a panic."
+        comment: "Check the `err` before variable re-assignment."
     name: reassigned-error
     query: |
         import codelingo/ast/go
