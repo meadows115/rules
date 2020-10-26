@@ -1,92 +1,123 @@
-tenets:
-  - name: non-exiting-goroutine
-    actions:
-      codelingo/review:
-        comment: This goroutine does not exit and may cause a resource leak.
+--- 
+tenets: 
+  - 
+    actions: 
+      codelingo/docs: 
+        body: |
+            In Go, it is important to ensure a Goroutine is able to successfully run to completion
+            to avoid a resource leak.
+            
+            ## Bad code
+            ```golang
+            go func() {
+                for { // Infinte `for` loop
+                  fmt.Println(i)
+                  time.Sleep(time.Second)
+                } 
+              fmt.Println("Countdown Complete")
+            }()
+            ```
+            
+            ## Good code
+            ```golang
+            go func() {
+              i := 10
+              for i > 0 {
+                fmt.Println(i)
+                time.Sleep(time.Second)
+                i = i - 1 
+              }
+              fmt.Println("Countdown Complete")
+            }()
+            ```
+        title: "Always Exit A Goroutine"
+      codelingo/review: 
+        comment: "Ensure a goroutine runs to completion to avoid a resource leak. From [Effective Go](https://golang.org/doc/effective_go.html#goroutines)."
+    name: non-exiting-goroutine
     query: |
-      import codelingo/ast/go
-
-      go.go_stmt(depth = any):
-        go.call_expr:
-          any_of:
-            # Match all non-labeled for loops
-            # TODO: investigate whether include depth issue preventing us from finding nested non-labeled for loops
-            # https://github.com/codelingo/codelingo/issues/455
-            exclude:
+        import codelingo/ast/go
+        
+        go.go_stmt(depth = any):
+          go.call_expr:
+            any_of:
+              # Match all non-labeled for loops
+              # TODO: investigate whether include depth issue preventing us from finding nested non-labeled for loops
+              # https://github.com/codelingo/codelingo/issues/455
+              exclude:
+                go.labeled_stmt(depth = any):
+                  include:
+                    @review comment
+                    go.for_stmt(depth = any):
+                      # Assert that we don't return from the for loop
+                      exclude:
+                        go.element:
+                          exclude:
+                            # Returns found inside func literals will not break the for loop
+                            go.func_lit(depth = any):
+                              include:
+                                go.return_stmt(depth = any)
+                      # Assert that we don't break using a break statement where the for loop is the
+                      # innermost "for", "switch", or "select" statement within the same function.
+                      # https://golang.org/ref/spec#Break_statements
+                      exclude:
+                        go.element:
+                          exclude:
+                            any_of:
+                              go.for_stmt(depth = any):
+                                include:
+                                  go.branch_stmt(depth = any):
+                                    tok == "break"
+                              go.select_stmt(depth = any):
+                                include:
+                                  go.branch_stmt(depth = any):
+                                    tok == "break"
+                              go.switch_stmt(depth = any):
+                                include:
+                                  go.branch_stmt(depth = any):
+                                    tok == "break"
+                                    exclude:
+                                      go.ident
+        
+              # Match all labeled for loops
+              # TODO: use fragments to reduce code repetition between labeled and non-labeled sections
               go.labeled_stmt(depth = any):
-                include:
-                  @review comment
-                  go.for_stmt(depth = any):
-                    # Assert that we don't return from the for loop
-                    exclude:
-                      go.element:
-                        exclude:
-                          # Returns found inside func literals will not break the for loop
-                          go.func_lit(depth = any):
+                go.ident:
+                  name as label
+                @review comment
+                go.for_stmt:
+                  # Assert that we don't return from the for loop
+                  exclude:
+                    go.element:
+                      exclude:
+                        # Returns found inside func literals will not break the for loop
+                        go.func_lit(depth = any):
+                          include:
+                            go.return_stmt(depth = any)
+                  # Assert that we don't break to the for loop's label
+                  exclude:
+                    go.branch_stmt(depth = any):
+                      tok == "break"
+                      go.ident:
+                        name == label
+        
+                  # Assert that we don't break using a break statement where the for loop is the
+                  # innermost "for", "switch", or "select" statement within the same function.
+                  #  https://golang.org/ref/spec#Break_statements
+                  exclude:
+                    go.element:
+                      exclude:
+                        any_of:
+                          go.for_stmt(depth = any):
                             include:
-                              go.return_stmt(depth = any)
-                    # Assert that we don't break using a break statement where the for loop is the
-                    # innermost "for", "switch", or "select" statement within the same function.
-                    # https://golang.org/ref/spec#Break_statements
-                    exclude:
-                      go.element:
-                        exclude:
-                          any_of:
-                            go.for_stmt(depth = any):
-                              include:
-                                go.branch_stmt(depth = any):
-                                  tok == "break"
-                            go.select_stmt(depth = any):
-                              include:
-                                go.branch_stmt(depth = any):
-                                  tok == "break"
-                            go.switch_stmt(depth = any):
-                              include:
-                                go.branch_stmt(depth = any):
-                                  tok == "break"
-                                  exclude:
-                                    go.ident
-
-            # Match all labeled for loops
-            # TODO: use fragments to reduce code repetition between labeled and non-labeled sections
-            go.labeled_stmt(depth = any):
-              go.ident:
-                name as label
-              @review comment
-              go.for_stmt:
-                # Assert that we don't return from the for loop
-                exclude:
-                  go.element:
-                    exclude:
-                      # Returns found inside func literals will not break the for loop
-                      go.func_lit(depth = any):
-                        include:
-                          go.return_stmt(depth = any)
-                # Assert that we don't break to the for loop's label
-                exclude:
-                  go.branch_stmt(depth = any):
-                    tok == "break"
-                    go.ident:
-                      name == label
-
-                # Assert that we don't break using a break statement where the for loop is the
-                # innermost "for", "switch", or "select" statement within the same function.
-                #  https://golang.org/ref/spec#Break_statements
-                exclude:
-                  go.element:
-                    exclude:
-                      any_of:
-                        go.for_stmt(depth = any):
-                          include:
-                            go.branch_stmt(depth = any):
-                              tok == "break"
-                        go.select_stmt(depth = any):
-                          include:
-                            go.branch_stmt(depth = any):
-                              tok == "break"
-                        go.switch_stmt(depth = any):
-                          include:
-                            go.branch_stmt(depth = any):
-                              tok == "break"
-                              exclude:
-                                go.ident
+                              go.branch_stmt(depth = any):
+                                tok == "break"
+                          go.select_stmt(depth = any):
+                            include:
+                              go.branch_stmt(depth = any):
+                                tok == "break"
+                          go.switch_stmt(depth = any):
+                            include:
+                              go.branch_stmt(depth = any):
+                                tok == "break"
+                                exclude:
+                                  go.ident
