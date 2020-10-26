@@ -10,8 +10,7 @@ tenets:
             ## Bad code
             ```golang
             go func() {
-                i := 10
-                for i > 0 { // Infinte `for` loop
+                for { // Infinte `for` loop
                   fmt.Println(i)
                   time.Sleep(time.Second)
                 } 
