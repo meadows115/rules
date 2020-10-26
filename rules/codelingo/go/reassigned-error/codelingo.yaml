@@ -24,32 +24,28 @@ tenets:
             
             ## Bad code
             ```golang
-            // FileAppendOnly sets a given file's mode to append only.
-            func setFileAppendOnly(filename string) error {
-              file, err := os.Open("userdata.json")
+            // AppendFile appends text to the end of a file
+            func AppendFile(path string, content []byte) error {
+              file, err := os.OpenFile(path, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
               defer file.Close()
-              err = file.Chmod(os.ModeAppend) // `err` not checked before re-assignment
-              if err != nil { 
-                return err
-              }
-              return nil
+            
+              _, err = file.Write(content)
+              return err
             }
             ```
             
             ## Good code
             ```golang
-            // FileAppendOnly sets a given file's mode to append only.
-            func FileAppendOnly(filename string) error {
-              file, err := os.Open("userdata.json")
+            // AppendFile appends text to the end of a file
+            func AppendFile(path string, content []byte) error {
+              file, err := os.OpenFile(path, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
               if err != nil {
                 return err
               }
               defer file.Close()
-              err = file.Chmod(os.ModeAppend)
-              if err != nil {
-                return err
-              }
-              return nil
+            
+              _, err = file.Write(content)
+              return err
             }
             ```
         title: "Check `err` Prior To Re-Assignment"
