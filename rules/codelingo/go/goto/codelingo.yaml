@@ -1,17 +1,55 @@
-tenets:
-  - name: goto-statement
-    actions:
-      codelingo/docs:
-        title: Goto Statement
+--- 
+tenets: 
+  - 
+    actions: 
+      codelingo/docs: 
         body: |
-          Find uses of goto.
-      codelingo/review:
-        comment: goto statments have a niche use and can obscure the flow of a program.
+            `goto` statements have a niche use and can obscure the normal flow of a program.
+            Use of `goto` statements are discouraged as it becomes difficult to trace the
+            control flow of a program.  
+            
+            ## Bad code
+            ```golang
+            // PrintValues prints each value up to the maximum value of 10
+            func PrintValues() {
+              i := 0
+            Start:
+              if i >= 10 {
+                goto End
+              } else {
+                i += 1
+                fmt.Println(i)
+                goto Start
+              }
+            End:
+              return
+            }
+            ```
+            
+            ## Good code
+            ```golang
+            // PrintValues prints each value up to the maximum value of 10
+            func PrintValues() {
+              i := 0
+              for {
+                if i >= 10 {
+                  return
+                } else {
+                  i += 1
+                }
+                fmt.Println(i)
+              }
+            }
+            ```
+        title: "Avoid Use Of `goto` Statements"
+      codelingo/review: 
+        comment: "In Go, `goto` statements have a niche use and can obscure the flow of a program and should be avoided."
+    name: goto-statement
     query: |
-      import (
-        codelingo/ast/go
-      )
-
-      @review comment
-      go.branch_stmt(depth = any):
-        tok == "goto"
+        import (
+          codelingo/ast/go
+        )
+        
+        @review comment
+        go.branch_stmt(depth = any):
+          tok == "goto"
