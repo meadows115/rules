@@ -48,8 +48,9 @@ tenets:
           }
           ```
       codelingo/review:
-        comment: Add `defer {{fileName}}.Close()` after opening the file `{{fileName}}`. 
-        From [Golang](https://yourbasic.org/golang/defer/) and [Effective Go](https://golang.org/doc/effective_go.html#defer).
+        comment: | 
+          Add `defer {{fileName}}.Close()` after opening the file `{{fileName}}`. 
+          From [Golang](https://yourbasic.org/golang/defer/) and [Effective Go](https://golang.org/doc/effective_go.html#defer).
     query: |
       import codelingo/ast/go
       
