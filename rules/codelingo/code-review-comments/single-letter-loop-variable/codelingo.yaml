@@ -6,20 +6,29 @@ funcs:
         return varName.length > 1 
       }
 
-tenets:
+rules:
   - name:  single-letter-loop-variable
     actions:
       codelingo/review:
-        comment: loop index variable "{{varName}}" should be a single letter [as specified in Code Review Comments](https://github.com/codelingo/codelingo/blob/master/tenets/codelingo/code-review-comments/FULL_TEXT.md#variable-names)
+        comment: A loop index variable should be a single letter.
       codelingo/docs:
-        title: Local variables with limited scope are prefered to be short
+        title: Use Short Loop Variable Names
         body: |
+          Variable names in Go should be short rather than long ,especially for local variables 
+          with a limited scope. For instance, `c` is preferred over `lineCount` for a loop variable. 
+          The basic rule is the further from its declaration that a name is used, the more descriptive
+          the name must be. For a method receiver, one or two letters is sufficient. Common variables such 
+          as loop indices and readers can be a single letter (i, r), whereas global variables need 
+          more descriptive names.
+
+          ## Bad code
+          ```golang
           
-          Variable names in Go should be short rather than long. This is especially true for local variables with limited scope. Prefer c to lineCount. Prefer i to sliceIndex.
+          ```
 
-          The basic rule. the further from its declaration that a name is used, the more descriptive the name must be. For a method receiver, one or two letters is sufficient. Common variables such as loop indices and readers can be a single letter (i, r). More unusual things and global variables need more descriptive names.
-
-      
+          ## Good code
+          ```golang
+          ```
     query: |
       import codelingo/ast/go
  
