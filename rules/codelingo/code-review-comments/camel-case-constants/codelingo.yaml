@@ -30,19 +30,28 @@ funcs:
         return constName.join('')
       }
 
-tenets:
+rules:
   - name:  camel-case-constants
     actions:
       codelingo/review:
-        comment: Define constant "{{varName}}" as "{{fixName(varName)}}". The convention in Go is to use MixedCaps or mixedCaps rather than underscores to write multiword constant names. [as specified in Code Review Comments](https://github.com/golang/go/wiki/CodeReviewComments#mixed-caps)
+        comment: Use MixedCaps or mixedCaps rather than underscores to write multiword constant names. From [Code Review Comments](https://github.com/golang/go/wiki/CodeReviewComments#mixed-caps).
       codelingo/docs:
-        title: Camel case constants
+        title: Camel Case Constants
         body: |    
-          See https://golang.org/doc/effective_go.html#mixed-caps. This applies even when it breaks conventions in other languages. For example an unexported constant is maxLength not MaxLength or MAX_LENGTH.
-      codelingo/rewrite:
-        #Currently, rewrite is incomplete as all the references to each constant should be fixed too.
+          Use MixedCaps or mixedCaps rather than underscores to write multiword constant names.
+          This applies even when it breaks conventions in other languages. For example, an unexported 
+          constant should be maxLength rather than MaxLength or MAX_LENGTH. For an exported constant,
+          use MaxLenth. See the godocs for more information (https://golang.org/doc/effective_go.html#mixed-caps).
 
-      
+          ## Bad code
+          ```golang
+          const ERR_SERVER_OVERLOADED = "Server is currently overloaded. Please retry later"
+          ```
+
+          ## Good code
+          ```golang
+          const ErrServerOverloaded = "Server is currently overloaded. Please retry later"
+          ```
     query: |
       import codelingo/ast/go
      
