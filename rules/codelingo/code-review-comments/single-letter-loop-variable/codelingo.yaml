@@ -23,11 +23,30 @@ rules:
 
           ## Bad code
           ```golang
-          
+          // Countdown will countdown for 10 seconds
+          func Countdown() {
+            counter := 10
+            for counter > 0 {
+              fmt.Println(counter)
+              time.Sleep(time.Second)
+              counter--
+            }
+            fmt.Println("Countdown Complete")
+          }
           ```
 
           ## Good code
           ```golang
+          // Countdown will countdown for 10 seconds
+          func Countdown() {
+            i := 10
+            for i > 0 {
+              fmt.Println(i)
+              time.Sleep(time.Second)
+              i--
+            }
+            fmt.Println("Countdown Complete")
+          }
           ```
     query: |
       import codelingo/ast/go
